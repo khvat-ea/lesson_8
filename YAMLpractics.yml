@@ -1,0 +1,123 @@
+---
+# Description of employees
+employee_1: &bookkeeper_1
+  name: Olga
+  job: bookkeeper
+
+employee_2: &any_1
+  name: Dmitriy
+  job: null
+
+employee_3: &any_2
+  name: Ivan
+  job: null
+
+employee_4: &lawyer_1
+  name: Olga
+  job: lawyer
+
+employee_5: &lawyer_2
+  name: Roman
+  job: lawyer
+
+employee_6: &driver_1
+  name: Maksim
+  job: driver
+
+employee_7: &builder_1
+  name: Ivan
+  job: builder
+
+employee_8: &builder_2
+  name: Nickolay
+  job: builder
+
+employee_9: &any_3
+  name: Yulia
+  job: null
+
+employee_10: &SecurityDirector
+  name: Igor Victorovich
+  job: SecurityDirector
+
+# Description of firm's departamets
+firm_group_1: &group_1
+  group_name: first
+  age_range_male: null
+  age_range_female: null
+  salary_level: tertiary
+  employees:
+    - *bookkeeper_1
+    - *bookkeeper_1
+    - *bookkeeper_1
+    - *bookkeeper_1
+    - *any_1
+    - *any_1
+    - *any_1
+    - *any_2
+    - *any_2
+
+firm_group_2: &group_2
+  group_name: second
+  age_range_male: range(18..29)
+  age_range_female: range(18..29)
+  salary_level: elementary
+  employees:
+    - *lawyer_2
+    - *lawyer_2
+    - *lawyer_2
+    - *lawyer_2
+    - *driver_1
+    - *driver_1
+
+firm_group_3: &group_3
+  group_name: third
+  age_range_male: null
+  age_range_female: null
+  salary_level: elementary
+  employees:
+    - *lawyer_1
+    - *builder_1
+    - *builder_2
+
+firm_group_4: &group_4
+  group_name: forth
+  age_range_male: null
+  age_range_female: range(30..39)
+  salary_level: elementary
+  employees:
+    - *any_3
+    - *any_3
+    - *any_3
+
+firm_group_5: &group_5
+  group_name: fifth
+  age_range_male: range(60..70)
+  age_range_female: range(30..39)
+  salary_level: secondary
+  employees:
+    - *any_3
+    - *any_3
+
+firm_group_6: &group_6
+  group_name: sixth
+  age_range_male: range(50..59)
+  age_range_female: null
+  salary_level: elementary
+  employees:
+    - *SecurityDirector
+
+# Description of firm
+company: Mechta
+company_groups:
+  group[1]:
+    - *group_1
+  group[2]:
+    - *group_2
+  group[3]:
+    - *group_3
+  group[4,5]:
+    - *group_4
+    - *group_5
+  group[6]:
+    - *group_6
