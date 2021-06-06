@@ -49,7 +49,7 @@
   - name: Cloning a project from a git
     git:
       repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
-      dest: /tmp
+      dest: /tmp/boxfuse-sample-java-war-hello
 
   - name: Build a project using the maven
     shell: cd /tmp/boxfuse-sample-java-war-hello && mvn package
