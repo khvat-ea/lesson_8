@@ -17,7 +17,12 @@
     pip:
       name: docker-py
 
-  - name: Copy dockerfile to builder host
+  - name: Creates directory
+    file:
+      path: /tmp/lesson_8
+      state: directory
+
+  - name: Copy the Dockerfile from localhost  to builder host
     copy:
       src: ./Dockerfile
       dest: /tmp/lesson_8
@@ -27,7 +32,13 @@
       name: khvatea/test_build
       path: /tmp/lesson_8
       force: yes
-
+  
+  - name: Authenticate with repository
+    docker_login:
+      username: "{{ u }}"
+      email: "{{ e }}"
+      password: "{{ p }}"
+      
   - name: Push image to docker HUB
     docker_image:
       name: khvatea/test_build
