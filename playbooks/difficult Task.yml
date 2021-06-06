@@ -1,0 +1,25 @@
+---
+- name: TEST build
+  hosts: builder
+
+  tasks:
+  - name: Ensure docker package is present
+    apt:
+      name: docker.io
+      state: present
+
+  - name: Copy dockerfile to builder host
+    cpoy:
+      src: ./Dockerfile
+      dest: /tmp/lesson_8
+  
+  - name: Create test build image
+    docker_image:
+      name: khvatea/test_build
+      path: /tmp/lesson_8
+      force: yes
+
+  - name: Push image to docker HUB
+    docker_image:
+      name: khvatea/test_build
+      push: yes
