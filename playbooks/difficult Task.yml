@@ -1,5 +1,5 @@
 ---
-- name: TEST build
+- name: Installing tools and creating a web application in the image
   hosts: builder
 
   tasks:
@@ -43,3 +43,20 @@
     docker_image:
       name: khvatea/test_build
       push: yes
+
+
+- name: Running a web application in the container
+  hosts: prod
+
+  tasks:
+  - name: Ensure docker package is present
+    apt:
+      name: docker.io
+      state: present
+  
+  - name: Start web application
+    docker_container:
+      name: box_fuse_test
+      image: khvatea/test_build
+      ports:
+        - "8090:8080"
