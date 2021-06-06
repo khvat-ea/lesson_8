@@ -54,6 +54,15 @@
       name: docker.io
       state: present
   
+  - name: Ensure pip package is present
+    apt:
+      name: python-pip
+      state: present
+
+  - name: Ensure pipka docker-py is present
+    pip:
+      name: docker-py
+  
   - name: Start web application
     docker_container:
       name: box_fuse_test
