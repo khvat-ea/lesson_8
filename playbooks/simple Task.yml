@@ -16,8 +16,22 @@
 
   - name: Ensure maven package is present
     apt:
-      name: git
+      name: maven
       state: present
+
+##################################################################################
+- name: Build project
+  hosts: builder
+  become: yes
+  
+  tasks:
+  - name: Cloning a project from a git
+    git:
+      repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
+      dest: /tmp/boxfuse-sample-java-war-hello
+
+  - name: Build a project using the maven
+    shell: cd /tmp/boxfuse-sample-java-war-hello && mvn package
 
 ##################################################################################
 - name: Install and startup web-server Tomcat9
@@ -40,23 +54,8 @@
         name: tomcat9
         state: started
 
-##################################################################################
-- name: Build project
-  hosts: builder
-  become: yes
-  
-  tasks:
-  - name: Cloning a project from a git
-    git:
-      repo: 'https://github.com/boxfuse/boxfuse-sample-java-war-hello.git'
-      dest: /tmp/boxfuse-sample-java-war-hello
-
-  - name: Build a project using the maven
-    shell: cd /tmp/boxfuse-sample-java-war-hello && mvn package
-
-  - name: Copy to remote host
-    copy:
+    - name: Copy artifacts from build
+      synchronize:
         src: /tmp/boxfuse-sample-java-war-hello/target/hello-1.0.war
         dest: /var/lib/tomcat9/webapps/hello-1.0.war
-    delegate_to: prod
-
+      delegate_to: instance-slave-1
