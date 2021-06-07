@@ -1,6 +1,7 @@
 ---
-- name: Installing tools and creating a web application in the image
-  hosts: builder
+- name: Installing docker tools
+  hosts: all
+  become: yes
 
   tasks:
   - name: Ensure docker package is present
@@ -17,6 +18,11 @@
     pip:
       name: docker-py
 
+##########################################################################
+- name: Creating a web application in the image
+  hosts: builder
+
+  tasks:
   - name: Creates directory
     file:
       path: /tmp/lesson_8
@@ -44,25 +50,11 @@
       name: khvatea/test_build
       push: yes
 
-
+##########################################################################
 - name: Running a web application in the container
   hosts: prod
 
-  tasks:
-  - name: Ensure docker package is present
-    apt:
-      name: docker.io
-      state: present
-  
-  - name: Ensure pip package is present
-    apt:
-      name: python-pip
-      state: present
-
-  - name: Ensure pipka docker-py is present
-    pip:
-      name: docker-py
-  
+  tasks:  
   - name: Start web application
     docker_container:
       name: box_fuse_test
